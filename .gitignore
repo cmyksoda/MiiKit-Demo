@@ -1,0 +1,8 @@
+build/
+build-tour/
+gen/
+project-notes/
+project-data/
+*.elf
+*.dol
+*.map
