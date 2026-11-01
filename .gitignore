@@ -6,3 +6,4 @@ project-data/
 *.elf
 *.dol
 *.map
+portlibs/
