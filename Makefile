@@ -15,15 +15,15 @@ include $(DEVKITPPC)/wii_rules
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	sdk-mii-demo
+TARGET		:=	MiiKit-Demo
 BUILD		:=	build
-SOURCES		:=	source source/mii
+SOURCES		:=	source source/miikit
 DATA		:=	data gen
 INCLUDES	:=	source
 FONT		?=	$(HOME)/.local/share/fonts/f/FOT_RodinNTLG_Pro_DB.otf
 
 ifneq ($(strip $(TOUR)),)
-TARGET		:=	sdk-mii-demo-tour
+TARGET		:=	MiiKit-Demo-tour
 BUILD		:=	build-tour
 endif
 
@@ -94,7 +94,7 @@ gen/rodin%.bin: tools/make_font.py
 
 clean:
 	@echo clean ...
-	@rm -fr build build-tour gen sdk-mii-demo*.elf sdk-mii-demo*.dol *.map
+	@rm -fr build build-tour gen MiiKit-Demo*.elf MiiKit-Demo*.dol *.map
 
 #---------------------------------------------------------------------------------
 run:

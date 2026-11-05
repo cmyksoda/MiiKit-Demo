@@ -22,7 +22,7 @@ The console's RESET button also quits, and POWER turns the Wii off.
 
 ## Installing
 
-Copy the `apps/sdk-mii-demo/` folder from the release zip to the root of your SD card, then open it from the Homebrew Channel.
+Copy the `apps/MiiKit-Demo/` folder from the release zip to the root of your SD card, then open MiiKit Demo from the Homebrew Channel. If you had 1.0.0, delete its `apps/sdk-mii-demo/` folder.
 
 Opened from the Homebrew Channel, the demo can read the Mii faces from your Wii. If it's opened some other way, it uses a copy of `RFL_Res.dat` in `sd:/mii` instead, which hbc-reborn's "Save Mii faces" makes.
 
@@ -31,7 +31,7 @@ Opened from the Homebrew Channel, the demo can read the Mii faces from your Wii.
 MiiKit Demo builds with devkitPPC and devkitPro's libogc, plus Python 3 with Pillow and fontTools for its font and cursor generators. The font file isn't in this repository: point `FONT` at your copy of FOT-RodinNTLG Pro DB.
 
 ```
-make FONT=/path/to/FOT_RodinNTLG_Pro_DB.otf    # sdk-mii-demo.dol
+make FONT=/path/to/FOT_RodinNTLG_Pro_DB.otf    # MiiKit-Demo.dol
 ```
 
 `make TOUR=1` builds a version for testing in Dolphin, which plays a scripted visit and saves screenshots to `sd:/tour`. `tools/` holds the scripts that check its frames and music, and `test_db.c`, which makes a database of random Miis to test with.
@@ -49,7 +49,7 @@ The Miis' faces and bodies belong to Nintendo. They're read from your Wii each t
 
 ## License
 
-The demo's code is under the GNU General Public License, version 3 or later ([LICENSE](LICENSE)). MiiKit, in `source/mii`, is public domain. The music, cursor, font and icon are under their own terms, above.
+The demo's code is under the GNU General Public License, version 3 or later ([LICENSE](LICENSE)). MiiKit, in `source/miikit`, is public domain. The music, cursor, font and icon are under their own terms, above.
 
 ---
 

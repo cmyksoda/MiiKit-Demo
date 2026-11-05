@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 /* A Mii database of random Miis for testing in Dolphin.
  *
- * cc -DMII_NO_OGC -Isource/mii tools/test_db.c source/mii/mii.c -o test_db && ./test_db COUNT RFL_DB.dat
+ * cc -DMII_NO_OGC -Isource/miikit tools/test_db.c source/miikit/mii.c -o test_db && ./test_db COUNT RFL_DB.dat
  */
 
 #include <stdio.h>

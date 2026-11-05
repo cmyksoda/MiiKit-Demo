@@ -10,8 +10,8 @@
 
 #include "font.h"
 #include "gfx.h"
-#include "mii/mii.h"
-#include "mii/miidraw.h"
+#include "miikit/mii.h"
+#include "miikit/miidraw.h"
 #include "music.h"
 #include "music_mp3.h"
 #include "rodin20_bin.h"

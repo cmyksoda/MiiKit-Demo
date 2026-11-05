@@ -2,8 +2,8 @@
 <app version="1">
   <name>MiiKit Demo</name>
   <coder>cmyksoda</coder>
-  <version>1.0.0</version>
-  <release_date>20261029</release_date>
+  <version>1.0.1</version>
+  <release_date>20261105</release_date>
   <short_description>All your Miis, in 3D</short_description>
   <long_description>Demo for MiiKit, the Mii library that started as sdk/mii in hbc-reborn. Displays the Miis that exist on your Wii and information about them. Their faces and bodies are read straight from your system.
 
