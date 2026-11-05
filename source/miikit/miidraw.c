@@ -2696,16 +2696,68 @@ static void head_mtx(Mtx view, Mtx head, int level) {
 	GX_LoadNrmMtxImm(nrm, GX_PNMTX2);
 }
 
+/* With the Wii's body, the head as the Mii Channel draws it: no lamp, each
+ * part's colour plus the body's env texel squared, in a second TEV stage
+ * (the Mii Channel's own TEV setup, read from Dolphin's shader cache). */
+static int head_env_begin(const mii_model *model, Mtx view, Mtx head) {
+	const mii_body *body = model->body;
+	Mtx mv, inv, nrm, e;
+	GXTexObj tex;
+	int i, j;
+
+	if (!body || !body->env.gx)
+		return 0;
+	guMtxConcat(view, head, mv);
+	if (guMtxInverse(mv, inv))
+		guMtxTranspose(inv, nrm);
+	else
+		guMtxCopy(mv, nrm);
+	memset(e, 0, sizeof(e));
+	for (i = 0; i < 2; ++i) {   /* not the body's: s = (1 + z) / 2, t = (1 - x) / 2, the Mii Channel's GX_TEXMTX1 */
+		const float *r = nrm[i ? 0 : 2];
+		float l = sqrtf(r[0] * r[0] + r[1] * r[1] + r[2] * r[2]);
+		float h = l > 0 ? (i ? -0.5f : 0.5f) / l : 0;
+
+		for (j = 0; j < 3; ++j)
+			e[i][j] = r[j] * h;
+		e[i][3] = 0.5f;
+	}
+	GX_LoadTexMtxImm(e, GX_TEXMTX1, GX_MTX2x4);
+	GX_InitTexObj(&tex, body->env.gx, body->env.w, body->env.h, GX_TF_I8, GX_CLAMP, GX_CLAMP, GX_FALSE);
+	GX_InitTexObjLOD(&tex, GX_LINEAR, GX_LINEAR, 0, 0, 0, GX_FALSE, GX_FALSE, GX_ANISO_1);
+	GX_LoadTexObj(&tex, GX_TEXMAP2);
+	GX_SetNumTexGens(2);
+	GX_SetTexCoordGen(GX_TEXCOORD1, GX_TG_MTX2x4, GX_TG_NRM, GX_TEXMTX1);
+	GX_SetNumTevStages(2);
+	GX_SetTevDirect(GX_TEVSTAGE1);
+	GX_SetTevSwapMode(GX_TEVSTAGE1, GX_TEV_SWAP0, GX_TEV_SWAP0);
+	GX_SetTevOrder(GX_TEVSTAGE1, GX_TEXCOORD1, GX_TEXMAP2, GX_COLORNULL);
+	GX_SetTevColorIn(GX_TEVSTAGE1, GX_CC_ZERO, GX_CC_TEXC, GX_CC_TEXC, GX_CC_CPREV);
+	GX_SetTevColorOp(GX_TEVSTAGE1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+	GX_SetTevAlphaIn(GX_TEVSTAGE1, GX_CA_ZERO, GX_CA_ZERO, GX_CA_ZERO, GX_CA_APREV);
+	GX_SetTevAlphaOp(GX_TEVSTAGE1, GX_TEV_ADD, GX_TB_ZERO, GX_CS_SCALE_1, GX_TRUE, GX_TEVPREV);
+	GX_SetChanCtrl(GX_COLOR0, GX_DISABLE, GX_SRC_REG, GX_SRC_REG, GX_LIGHTNULL, GX_DF_NONE, GX_AF_NONE);
+	return 1;
+}
+
+static void head_env_end(void) {
+	GX_SetNumTevStages(1);
+	GX_SetNumTexGens(1);
+	GX_SetChanCtrl(GX_COLOR0, GX_ENABLE, GX_SRC_REG, GX_SRC_REG, GX_LIGHT0, GX_DF_CLAMP, GX_AF_NONE);
+}
+
 static void draw_head(const mii_model *model, int expression, Mtx view, Mtx head, int lod) {
 	static const int translucent[] = { MII_PART_MASK, MII_PART_NOSELINE, MII_PART_GLASS };
 	mii_model *mm = (mii_model *) model;   /* the lists are made on first use */
 	int built = model->part[MII_PART_FACELINE].lods;
 	int level = lod > 0 && built ? (lod < built ? lod : built) : 0;   /* as far as built */
+	int env;
 	unsigned i;
 
 	if (expression < 0 || expression >= MII_EXPR_COUNT || !model->mask[expression].gx)
 		expression = MII_EXPR_NORMAL;   /* not built (mii_model_opts.expressions) */
 	head_mtx(view, head, level);
+	env = head_env_begin(model, view, head);
 	/* The display lists, once there is a face to put between them. */
 	if (model->mask[expression].gx && (model->head_dl[level][0] || compile_head(mm, level))) {
 		GX_CallDispList(model->head_dl[level][0], model->head_dl_size[level][0]);
@@ -2719,6 +2771,8 @@ static void draw_head(const mii_model *model, int expression, Mtx view, Mtx head
 		GX_SetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
 		GX_SetCurrentMtx(GX_PNMTX0);
 		GX_ClearVtxDesc();
+		if (env)
+			head_env_end();
 		return;
 	}
 
@@ -2752,6 +2806,8 @@ static void draw_head(const mii_model *model, int expression, Mtx view, Mtx head
 	GX_SetCullMode(GX_CULL_BACK);
 	GX_SetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
 	GX_SetCurrentMtx(GX_PNMTX0);
+	if (env)
+		head_env_end();
 }
 
 /* The Wii body's shadow (mii_body_shadow): the Mii Channel's mt_shadow, a
