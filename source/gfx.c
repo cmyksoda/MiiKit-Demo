@@ -11,7 +11,7 @@
 float gfx_w = 640, gfx_h = 480;
 int gfx_widescreen;
 
-/* A GX FIFO in MEM2 stalls a real Wii at random (sdk/mii README), so it stays in MEM1's .bss. */
+/* A GX FIFO in MEM2 stalls a real Wii at random (MiiKit's README), so it stays in MEM1's .bss. */
 static u8 fifo[FIFO_SIZE] ATTRIBUTE_ALIGN(32);
 static GXRModeObj *rmode;
 static void *xfb[2];

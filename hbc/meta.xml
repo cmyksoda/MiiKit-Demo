@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <app version="1">
-  <name>sdk/mii Demo</name>
+  <name>MiiKit Demo</name>
   <coder>cmyksoda</coder>
   <version>1.0.0</version>
   <release_date>20261029</release_date>
   <short_description>All your Miis, in 3D</short_description>
-  <long_description>Demo for sdk/mii, from hbc-reborn. Displays the Miis that exist on your Wii and information about them. Their faces and bodies are read straight from your system.
+  <long_description>Demo for MiiKit, the Mii library that started as sdk/mii in hbc-reborn. Displays the Miis that exist on your Wii and information about them. Their faces and bodies are read straight from your system.
 
 Music: Focus Loop by FreeGroove (Pixabay)</long_description>
   <ahb_access />

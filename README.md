@@ -1,6 +1,6 @@
-# ![sdk/mii Demo](images/icon-2x.png)
+# ![MiiKit Demo](images/icon-2x.png)
 
-sdk/mii Demo is a Wii app that shows every Mii on your Wii in 3D, with their faces and bodies read straight from the system. It's a demo of sdk/mii, the Mii renderer from [hbc-reborn](https://github.com/Monsterray/hbc-reborn).
+MiiKit Demo is a Wii app that shows every Mii on your Wii in 3D, with their faces and bodies read straight from the system. It's a demo of [MiiKit](https://github.com/cmyksoda/MiiKit), the Mii library that started as sdk/mii in [hbc-reborn](https://github.com/Monsterray/hbc-reborn).
 
 ![The line-up: twelve Miis standing in two rows on a white background](images/line-up.png)
 
@@ -22,13 +22,13 @@ The console's RESET button also quits, and POWER turns the Wii off.
 
 ## Installing
 
-Copy the `apps/sdk-mii-demo/` folder from the release zip to the root of your SD card, then open sdk/mii Demo from the Homebrew Channel.
+Copy the `apps/sdk-mii-demo/` folder from the release zip to the root of your SD card, then open it from the Homebrew Channel.
 
 Opened from the Homebrew Channel, the demo can read the Mii faces from your Wii. If it's opened some other way, it uses a copy of `RFL_Res.dat` in `sd:/mii` instead, which hbc-reborn's "Save Mii faces" makes.
 
 ## Building
 
-sdk/mii Demo builds with devkitPPC and devkitPro's libogc, plus Python 3 with Pillow and fontTools for its font and cursor generators. The font file isn't in this repository: point `FONT` at your copy of FOT-RodinNTLG Pro DB.
+MiiKit Demo builds with devkitPPC and devkitPro's libogc, plus Python 3 with Pillow and fontTools for its font and cursor generators. The font file isn't in this repository: point `FONT` at your copy of FOT-RodinNTLG Pro DB.
 
 ```
 make FONT=/path/to/FOT_RodinNTLG_Pro_DB.otf    # sdk-mii-demo.dol
@@ -38,7 +38,7 @@ make FONT=/path/to/FOT_RodinNTLG_Pro_DB.otf    # sdk-mii-demo.dol
 
 ## Credits
 
-- **sdk/mii**, by the hbc-reborn developers, including its NAND loader from cmyksoda's fork
+- **MiiKit** (sdk/mii in hbc-reborn), by the hbc-reborn developers, with its NAND loader by cmyksoda
 - **"Focus Loop"** by FreeGroove, from Pixabay, under the Pixabay Content License
 - **The pointing hand**, from drmr's Wii Homebrew Cursors, under the LGPL 3.0 ([licenses/](licenses/))
 - The interface font, FOT-RodinNTLG Pro DB, © 2003 Fontworks Japan, Inc. RodinNTLGPro is a trademark of Fontworks Japan, Inc.
@@ -49,7 +49,7 @@ The Miis' faces and bodies belong to Nintendo. They're read from your Wii each t
 
 ## License
 
-The demo's code is under the GNU General Public License, version 3 or later ([LICENSE](LICENSE)). sdk/mii, in `source/mii`, is public domain. The music, cursor, font and icon are under their own terms, above.
+The demo's code is under the GNU General Public License, version 3 or later ([LICENSE](LICENSE)). MiiKit, in `source/mii`, is public domain. The music, cursor, font and icon are under their own terms, above.
 
 ---
 
