@@ -607,9 +607,7 @@ static void on_sync(u32 held) {
 	pair = 1;
 }
 
-static void on_reset(u32 irq, void *ctx) {
-	(void) irq;
-	(void) ctx;
+static void on_reset(void) {
 	quit = 1;
 }
 
